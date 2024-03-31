@@ -28,10 +28,10 @@ const userAuthentication = (req, res, next) => {
     const { username, password } = req.headers;
     const user = USERS.find((u) => u.username === username && u.password === password);
     if(user) {
-        req.user = user;
+        req.user = user; // Add user object to the request...
         next();
     } else {
-
+        res.status(404).json({ messege: "User authentication failed!" });
     }
 }
 
@@ -90,18 +90,34 @@ app.post('/users/signup', (req, res) => {
 });
 
 app.post('/users/login', userAuthentication, (req, res) => {
-
+    res.json({ messege: "User signed in successfully" });
 });
 
 app.get('/users/courses', userAuthentication, (req, res) => {
-
+    // let filteredCourses = [];
+    // for(let i = 0; i<COURSES.lenght; i++) {
+    //     if(COURSES[i].published) {
+    //         filteredCourses.push(COURSES[i]);
+    //     }
+    // }
+    res.json({ courses: COURSES.filter((c) => c.published) });
 });
 
-app.post('/users/courses/:courseid', userAuthentication, (req, res) => {
-
+app.post('/users/courses/:courseId', userAuthentication, (req, res) => {
+    const courseId = parseInt(req.params.courseId);
+    const course = COURSES.find((c) => c.courseId && c.published);
+    if(course) {
+        // find the user in global USERS array...
+        req.user.purchasedCourse.push(courseId);
+        res.json({ messege: "Course purchased successfully" });
+    } else {
+        res.status(404).json({ messege: "Course not found or not available" });
+    }
 });
 
 app.get('/users/purchasedcourses', userAuthentication, (req, res) => {
+    const purchasedCourse = COURSES.filter((c) => req.user.purchasedCourse.includes(c.id));
+    res.json({ purchasedCourse });
 
 })
 

@@ -68,7 +68,14 @@ app.get('/admin/courses', adminAuthentication, (req, res) => {
 
 // user routes
 app.post('/users/signup', (req, res) => {
-
+    const user = {...req.body, purchasedCourse: []};
+    // const user = {
+    //     username: req.body.username,
+    //     password: req.body.password,
+    //     purchasedCourse: []
+    // };
+    USERS.push(user);
+    res.json({ messege: "User created successfully" });
 });
 
 app.post('/users/login', (req, res) => {

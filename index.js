@@ -51,9 +51,20 @@ app.get('/admin/courses', adminAuthentication, (req, res) => {
     res.json({ messege: 'Course created successfully', courseId: course.id });
 });
 
-app.put('/admin/courses/:courseid', adminAuthentication, (req, res) => {
-
+app.put('/admin/courses/:courseId', adminAuthentication, (req, res) => {
+    const courseId = parseInt(req.params.courseId);
+    const course = COURSES.find((c) => c.id === courseId);
+    if(course) {
+        Object.assign(course, req.body);
+        res.json({ messege: "Course updated successfully!" });
+    } else {
+        res.status(404).json({ messege: "Course not found!" });
+    }
 });
+
+app.get('/admin/courses', adminAuthentication, (req, res) => {
+    res.json({ courses: COURSES });
+})
 
 // user routes
 app.post('/users/signup', (req, res) => {

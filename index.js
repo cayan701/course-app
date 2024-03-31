@@ -42,7 +42,13 @@ app.post('/admin/login', adminAuthentication, (req, res) => {
 });
 
 app.get('/admin/courses', adminAuthentication, (req, res) => {
-    // logic to see courses
+    const course = req.body;
+    if(!course.title) {
+        return res.status(411).send('Please provide course title');
+    }
+    course.id = Date.now();
+    COURSES.push(course);
+    res.json({ messege: 'Course created successfully', courseId: course.id });
 });
 
 app.put('/admin/courses/:courseid', adminAuthentication, (req, res) => {

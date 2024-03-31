@@ -49,7 +49,6 @@ app.put('/admin/courses/:courseid', adminAuthentication, (req, res) => {
 })
 
 // user routes
-
 app.post('/users/signup', (req, res) => {
 
 })

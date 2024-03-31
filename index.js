@@ -12,7 +12,7 @@ let ADMINS = [];
 let USERS = [];
 let COURSES = [];
 
-
+const adminAuthentication = 
 
 // admin routes 
 app.post('/admin/signup', (req, res) => {
@@ -27,16 +27,16 @@ app.post('/admin/signup', (req, res) => {
     }
 });
 
-app.post('/admin/login', (req, res) => {
+app.post('/admin/login', adminAuthentication, (req, res) => {
     // logic to auth login
 
 });
 
-app.get('/admin/courses', (req, res) => {
+app.get('/admin/courses', adminAuthentication, (req, res) => {
     // logic to see courses
 });
 
-app.put('/admin/courses/:courseid', (req, res) => {
+app.put('/admin/courses/:courseid', adminAuthentication, (req, res) => {
 
 })
 

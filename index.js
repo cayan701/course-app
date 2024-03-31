@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const cors = require('cors');
 const bodyParser = require('body-parser');
 const port = 3000;
 
@@ -14,6 +13,9 @@ let COURSES = [];
 
 const adminAuthentication = (req, res, next) => { 
     const { username, password } = req.headers;
+    console.log('control here');
+    console.log(username);
+    console.log(password);
     const admin = ADMINS.find((a) => a.username === username && a.password === password);
     if(admin) {
         next();
@@ -36,8 +38,7 @@ app.post('/admin/signup', (req, res) => {
 });
 
 app.post('/admin/login', adminAuthentication, (req, res) => {
-    // logic to auth login
-
+    res.json({ messege: 'Admin logged in sucessfully' });
 });
 
 app.get('/admin/courses', adminAuthentication, (req, res) => {
@@ -46,24 +47,24 @@ app.get('/admin/courses', adminAuthentication, (req, res) => {
 
 app.put('/admin/courses/:courseid', adminAuthentication, (req, res) => {
 
-})
+});
 
 // user routes
 app.post('/users/signup', (req, res) => {
 
-})
+});
 
 app.post('/users/login', (req, res) => {
 
-})
+});
 
 app.get('/users/courses', (req, res) => {
 
-})
+});
 
 app.post('/users/courses/:courseid', (req, res) => {
 
-})
+});
 
 app.get('/users/purchasedcourses', (req, res) => {
 

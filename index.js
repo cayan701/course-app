@@ -12,7 +12,15 @@ let ADMINS = [];
 let USERS = [];
 let COURSES = [];
 
-const adminAuthentication = 
+const adminAuthentication = (req, res, next) => {
+    const { username, password } = req.headers;
+    const admin = ADMINS.find((a) => a.username === admin.username && a.password === admin.password);
+    if(admin) {
+        next();
+    } else {
+        res.status(403).json({ messege: 'Auth failed' });
+    }
+}
 
 // admin routes 
 app.post('/admin/signup', (req, res) => {

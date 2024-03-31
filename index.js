@@ -24,6 +24,17 @@ const adminAuthentication = (req, res, next) => {
     }
 }
 
+const userAuthentication = (req, res, next) => {
+    const { username, password } = req.headers;
+    const user = USERS.find((u) => u.username === username && u.password === password);
+    if(user) {
+        req.user = user;
+        next();
+    } else {
+
+    }
+}
+
 // admin routes 
 app.post('/admin/signup', (req, res) => {
     // logic to signup admin
@@ -78,19 +89,19 @@ app.post('/users/signup', (req, res) => {
     res.json({ messege: "User created successfully" });
 });
 
-app.post('/users/login', (req, res) => {
+app.post('/users/login', userAuthentication, (req, res) => {
 
 });
 
-app.get('/users/courses', (req, res) => {
+app.get('/users/courses', userAuthentication, (req, res) => {
 
 });
 
-app.post('/users/courses/:courseid', (req, res) => {
+app.post('/users/courses/:courseid', userAuthentication, (req, res) => {
 
 });
 
-app.get('/users/purchasedcourses', (req, res) => {
+app.get('/users/purchasedcourses', userAuthentication, (req, res) => {
 
 })
 

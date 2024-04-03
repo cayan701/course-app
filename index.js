@@ -48,7 +48,8 @@ app.post("/admin/signup", (req, res) => {
     res.status(403).json({ messege: "Admin already exists" });
   } else {
     ADMINS.push(admin);
-    res.json({ messege: "Admin created successfully" });
+    const token = generateJwt(admin);
+    res.json({ messege: "Admin created successfully" }, token);
   }
 });
 
